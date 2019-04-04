@@ -54,6 +54,7 @@ body {
   top: -12%;
   left: 50%;
   transform: translateX(-50%);
+  background: #fff ;
 }
 
 .popup_container { 
@@ -166,4 +167,5 @@ body {
   font-size: 22px;
   font-weight: 600;
   position: relative;
+  background: #fff;
 }

@@ -85,7 +85,7 @@ game.appendChild(input);
 let score = 0;
 input.value = `Ваши очки: ${score}`;
 input.classList.add('score');
-input.getAttribute('disabled')
+input.setAttribute('disabled', 'disabled')
 
 
 function move() {
@@ -208,7 +208,7 @@ function resault() {
   resultInput = document.createElement('input');
   warp.appendChild(resultInput)
   resultInput.classList.add('result__input');
-  resultInput.getAttribute('disabled');
+  resultInput.setAttribute('disabled', 'disabled');
   resultInput.value = `Score: ${score}`;
 }
 
