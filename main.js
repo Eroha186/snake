@@ -143,9 +143,7 @@ function move() {
   if (snakeBody[0].classList.contains('snakeBody')) {
     clearInterval(timer);
     snakeBody[0].style.background = '#000';
-    window.location.reload();
-    game.style.display = 'none';
-    popup_container.style.display = 'block';
+    resault();
   }
 
   snakeBody[0].classList.add('snakeHead');
@@ -203,5 +201,25 @@ window.addEventListener('keydown', function(e) {
   }
 });
 
+function resault() {
+  result.style.display = 'block';
+  input.remove();
+  resultInput = document.createElement('input');
+  warp.appendChild(resultInput)
+  resultInput.classList.add('result__input');
+  resultInput.value = `Score: ${score}`;
+}
 
+function reload() {
+  snakeBody.splice(0, snakeBody.length);
+  createSnake;
+  hideMenu();
+  result.style.display = 'none';
+}
 
+function showMenu() {
+  window.location.reload();
+  game.style.display = 'none';
+  popup_container.style.display = 'block';
+  result.style.display = 'none';
+}
