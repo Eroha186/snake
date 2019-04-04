@@ -211,13 +211,6 @@ function resault() {
 }
 
 function reload() {
-  snakeBody.splice(0, snakeBody.length);
-  createSnake;
-  hideMenu();
-  result.style.display = 'none';
-}
-
-function showMenu() {
   window.location.reload();
   game.style.display = 'none';
   popup_container.style.display = 'block';
