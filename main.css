@@ -3,19 +3,24 @@
 }
 
 body {
-  margin: 100px;
-  margin-top: 0;
-  padding-top: 100px;
+  margin: 0;
+  padding: 0;
   position: relative;
+}
+
+#game {
+  display: none;
 }
 
 .field {
   width: 500px;
   height: 500px;
   margin: 0 auto;
+  margin-top: 150px;
   display: flex;
   flex-wrap: wrap;
   background: #ccc;
+  z-index: -2;
 }
 
 .excel {
@@ -44,7 +49,56 @@ body {
   border: none;
   font-size: 30px;
   position: absolute;
-  top: 30px;
+  top: -12%;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.popup_container { 
+  height: 100vh;
+  background: #fff;
+  z-index: 10;
+}
+
+.title {
+  margin: 0;
+  margin-top: 20px;
+  font-size: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  height: 2px;
+  width: 106px;
+  transform: translateX(-53px);
+  background: #000;
+}
+
+.button-warp {
+  padding: 35px;
+}
+
+.button {
+  display: block;
+  outline: none;
+  border: 2px solid black;
+  margin: 0 auto;
+  width: 106px;
+  padding: 15px 0 15px 0;
+  margin-bottom: 15px;
+  background: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #000;
+  color: #fff;
 }

@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <script src="main.js"></script>
+  <div id="game"></div>
+  <div id="popup_container">
+    <h1 class="title">Меню</h1>
+
+    <div class="button-warp">
+        <button class="button"  onclick="inner(); hideMenu() ">Inner</button>
+        <button class="button"  onclick="easy(); hideMenu() ">Easy</button>
+        <button class="button"  onclick="medium(); hideMenu() ">Medium</button>
+        <button class="button"  onclick="hard(); hideMenu() ">Hard</button>
+    </div>
+  </div>  
+  <script src="main.js"></script> 
 </body>
 </html>

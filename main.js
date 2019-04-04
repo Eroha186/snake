@@ -1,13 +1,21 @@
+function hideMenu() {
+  game.style.display = 'block';
+  popup_container.style.display = 'none';
+}
+
+// создаем поле 
 let field = document.createElement('div');
-document.body.appendChild(field);
+game.appendChild(field);
 field.classList.add('field');
 
+// делем поле на клетки
 for (let i = 1; i<101; i++) {
   let excel = document.createElement('div');
   field.appendChild(excel);
   excel.classList.add('excel');
 }
 
+// присваевамем каждой клетки координаты 
 let excel = document.getElementsByClassName('excel');
 let x = 1,
     y = 10;
@@ -22,24 +30,32 @@ for (let i = 0; i<excel.length; i++) {
   x++;
 }    
 
-function generateSnake () {
-  let posX = Math.round(Math.random() * (10-3) + 3);
-  let posY = Math.round(Math.random() * (10-1) + 1);
-  return [posX, posY];
+// создаем змею
+let snaekeBody;
+
+function createSnake() {
+  function generateSnake () {
+    let posX = Math.round(Math.random() * (10-3) + 3);
+    let posY = Math.round(Math.random() * (10-1) + 1);
+    return [posX, posY];
+  }
+  
+  let coordinates = generateSnake();
+  snakeBody = [document.querySelector('[posX = "' + coordinates[0] + '"][posY = "' + coordinates[1] + '"]'),
+                   document.querySelector('[posX = "' + (coordinates[0]-1) + '"][posY = "' + coordinates[1] + '"]'),
+                   document.querySelector('[posX = "' + (coordinates[0]-2) + '"][posY = "' + coordinates[1] + '"]')
+                  ];
+  
+  for (let i = 0; i < snakeBody.length; i++) {
+    snakeBody[i].classList.add('snakeBody');
+  }
+  
+  snakeBody[0].classList.add('snakeHead');
 }
 
-let coordinates = generateSnake();
-let snakeBody = [document.querySelector('[posX = "' + coordinates[0] + '"][posY = "' + coordinates[1] + '"]'),
-                 document.querySelector('[posX = "' + (coordinates[0]-1) + '"][posY = "' + coordinates[1] + '"]'),
-                 document.querySelector('[posX = "' + (coordinates[0]-2) + '"][posY = "' + coordinates[1] + '"]')
-                ];
+createSnake();
 
-for (let i = 0; i < snakeBody.length; i++) {
-  snakeBody[i].classList.add('snakeBody');
-}
-
-snakeBody[0].classList.add('snakeHead');
-
+// Создаем яблоко
 let apple;
 
 function createApple () {
@@ -62,22 +78,30 @@ function createApple () {
 
 createApple();
 
-let direction = 'right';
-let step = false;
-
+// вывод очков 
 let input = document.createElement('input');
-document.body.appendChild(input);
+game.appendChild(input);
 
 let score = 0;
 input.value = `Ваши очки: ${score}`;
 input.classList.add('score');
 
+
 function move() {
+  /*
+    передвижение змеи 
+    в snakeСoordinates записываются координаты первого элемента
+    удаляется класс snakeHead 
+    удаляется последний элемент snakeBody
+
+  */ 
   let snakeCoordinates = [snakeBody[0].getAttribute('posX'), snakeBody[0].getAttribute('posY')];
   snakeBody[0].classList.remove('snakeHead');
   snakeBody[snakeBody.length - 1].classList.remove('snakeBody');
   snakeBody.pop();
   
+
+  // правила ухода за границу поля и правила перемещение змейки 
   if (direction == 'right') {
     if (snakeCoordinates[0] < 10) {
       snakeBody.unshift(document.querySelector('[posX = "' + (+snakeCoordinates[0] + 1) + '"][posY ="' + snakeCoordinates[1] + '"]'));
@@ -104,6 +128,7 @@ function move() {
     }
   }
  
+  // правила поедания яблока
   if (snakeBody[0].getAttribute('posX') == apple.getAttribute('posX') && snakeBody[0].getAttribute('posY') == apple.getAttribute('posY')) {
     apple.classList.remove('apple');
     let a = snakeBody[snakeBody.length - 1].getAttribute('posX');
@@ -114,25 +139,49 @@ function move() {
     input.value = `Ваши очки: ${score}`;
   }
 
+  // правила проигрыша 
   if (snakeBody[0].classList.contains('snakeBody')) {
-    clearInterval(interval);
+    clearInterval(timer);
     snakeBody[0].style.background = '#000';
-    setTimeout(() => {
-      alert(`Игра окончена. Ваше количество очков: ${score}`);
-    }, 200);
-
+    window.location.reload();
+    game.style.display = 'none';
+    popup_container.style.display = 'block';
   }
 
   snakeBody[0].classList.add('snakeHead');
   for (let i = 0; i < snakeBody.length; i++) {
     snakeBody[i].classList.add('snakeBody');
-   }
+  }
 
    step = true;
 }
 
-let interval = setInterval(move, 300);
+function inner () { //Простой
+  timer = setInterval(function(){
+      move();
+  },250);
+}
+function easy () {//средний
+  timer = setInterval(function(){
+      move();
+  },200);
+}
+function medium () {//сложный
+  timer = setInterval(function(){
+      move();
+  },150);
+}
+function hard () {//сложный
+  timer = setInterval(function(){
+      move();
+  },100);
+}
 
+// переменные для движения 
+let direction = 'right';
+let step = false;
+
+// логика движения 
 window.addEventListener('keydown', function(e) {
   if (step == true) {
     if (e.keyCode == 37 && direction != 'right') {
